@@ -1,0 +1,90 @@
+/* caida con giro */
+@keyframes rotateFall {
+    0%      { transform: rotateZ(0deg); }
+    20%     { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+    40%     { transform: rotateZ(17deg); }
+    60%     { transform: rotateZ(16deg); }
+    100%    { transform: translateY(100%) rotateZ(17deg); }
+}
+
+/* deslizar hacia afuera por la izquierda*/
+@keyframes slideOutLeft {
+    to      { transform: translateX(-100%); }
+}
+
+/* efecto periodico */
+@keyframes rotateOutNewspaper {
+    to      { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+}
+
+/* aparecer  */
+@keyframes scaleUp {
+    from    { opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+/* desaparecer */
+@keyframes scaleDown {
+	from  { opacity: 0.5; -webkit-transform: scale(1); }
+    to    { opacity: 0; -webkit-transform: scale(1); }
+}
+
+/* deslizar hacia adentro por la derecha */
+@keyframes slideInRight {
+    from    { transform:translateX(140%); }
+    to      { transform: translateX(0); }
+}
+
+/* deslizar hacia adentro desde abajo */
+@keyframes slideInUp {
+    from    { transform:translateY(100%); }
+    to      { transform: translateY(0); }
+}
+
+/* deslizar hacia adentro desde arriba */
+@keyframes slideInDown {
+	from	{transform:translateY(-20%);}
+	to		{transform:translateY(5%);}
+}
+
+
+.ng-enter {
+	animation-name: slideInRight;
+	animation-timing-function: ease-in;
+	animation-duration: 0.4s;
+	animation-delay: 0s;
+}
+
+.ng-leave {
+	animation-name: slideOutLeft;
+	animation-timing-function: ease-in;
+	animation-duration: 0.2s;
+	animation-delay: 0s;
+}
+
+.formulario.ng-enter{
+	animation-name: scaleUp;
+	animation-timing-function: ease-in;
+	animation-duration: 0.2s;
+	animation-delay: 0s;
+}
+
+.formulario.ng-leave{
+	animation-name: scaleDown;
+	animation-timing-function: ease-in;
+	animation-duration: 0.3s;
+	animation-delay: 0s;
+}
+
+.loading.ng-enter { 
+	animation-name: slideInDown;
+	animation-timing-function: ease-in;
+	animation-duration: 0.2s;
+	animation-delay: 0s; 
+}
+
+.loading.ng-leave { 
+	animation-name: scaleDown;
+	animation-timing-function: ease-in;
+	animation-duration: 0.3s;
+	animation-delay: 0s;
+}

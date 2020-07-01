@@ -7,6 +7,8 @@ class Autoloader {
         "Config"            => "clases_sistema/Config.php",
         "Constantes"        => "clases_sistema/Constantes.php",
         "Session"           => "clases_sistema/Session.php",
+        "Menu"              => "clases_sistema/Menu.php",
+        "Utilidades"        => "clases_sistema/Utilidades.php",
     );
 
     public function __construct( $prefijo = "" ){

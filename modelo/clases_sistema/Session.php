@@ -22,7 +22,6 @@ class Session{
 
     public function isOpen(){
         return isset($_SESSION[$this->idSesion]);
-        // $_SESSION["USR_PORTAL"] ???
 	}
 
     public function setTime(){
