@@ -126,9 +126,10 @@ class Menu {
 			  	<script src="libs/angular-1.4.8/angular-route.js?' . $this->token . '"></script>
 			  	<script src="libs/angular-1.4.8/angular-animate.min.js?' . $this->token . '"></script>
 			  	<script src="libs/ng-table/dist/ng-table.min.js?' . $this->token . '"></script>
-			  	<script src="libs/jquery/jquery.slim.min.js?' . $this->token . '"></script>
 			  	<script src="libs/tether/tether.min.js?' . $this->token . '"></script>
-				<script src="libs/bootstrap/js/bootstrap.min.js?' . $this->token . '"></script>';
+			  	<script src="libs/jquery/jquery.slim.min.js?' . $this->token . '"></script>
+                <script src="libs/b4/js/bootstrap.min.js?' . $this->token . '"></script>
+                <script src="libs/local/js/funciones.js?' . $this->token . '"></script>';
 	}
 	
 	private function getDefaultScripts(){
@@ -161,7 +162,8 @@ class Menu {
 			            <script src="controlador/ServicioAjax.js?' . $this->token . '"></script>
 			            <script src="controlador/LoginController.js?' . $this->token . '"></script>
 			            <link rel="stylesheet"  href="libs/b4/css/bootstrap.min.css?' . $this->token . '"/>
-			            <link rel="stylesheet" href="libs/local/animaciones.css?' . $this->token . '" />';
+			            <link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
+			            <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />';
 	
 		return $dependencias;
     }

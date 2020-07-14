@@ -1,4 +1,3 @@
-<!-- Clase para realizar conexiones a la base de datos -->
 <?php
 class Conexion extends PDO {
 

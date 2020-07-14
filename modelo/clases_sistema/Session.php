@@ -19,6 +19,10 @@ class Session{
         $_SESSION[$this->idSesion] = $id;
         $this->setTime();
     }
+    
+    public function getIdSesion( ){
+        return $_SESSION[$this->idSesion];
+    }
 
     public function isOpen(){
         return isset($_SESSION[$this->idSesion]);

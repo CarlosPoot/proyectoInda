@@ -7,8 +7,17 @@ class Autoloader {
         "Config"            => "clases_sistema/Config.php",
         "Constantes"        => "clases_sistema/Constantes.php",
         "Session"           => "clases_sistema/Session.php",
+        'Http' 													=> 'clases_sistema/Http.php',
+			'HttpInput' 											=> 'clases_sistema/HttpInput.php',
+			'HttpPost'												=> 'clases_sistema/HttpPost.php',
+			'HttpGet' 												=> 'clases_sistema/HttpGet.php',
         "Menu"              => "clases_sistema/Menu.php",
         "Utilidades"        => "clases_sistema/Utilidades.php",
+        'AutenticacionController'	=> 'clases_controlador/AutenticacionController.php',
+        'LoginController'	        => 'clases_controlador/LoginController.php',
+        'UsuarioBean' 				=> 'clases_modelo/bean/UsuarioBean.php',
+        'Dao' 													=> 'clases_modelo/dao/Dao.php',
+        'UsuarioDao' 				=> 'clases_modelo/dao/UsuarioDao.php',
     );
 
     public function __construct( $prefijo = "" ){
