@@ -7,11 +7,11 @@ if($s->isOpen()){
     
 	$menu = new Menu();
 	$menu->getMenu($s->getIdSesion());
-	
 	$vista = file_get_contents("vista/MenuPrincipal.html");
 	$vista = str_replace("@scriptMenus", $menu->getMenus(), $vista);
 	$vista = str_replace("@scriptControladores", $menu->getScripts(), $vista);
-	$vista = str_replace("@script", $menu->getRutas(), $vista);
+    $vista = str_replace("@script", $menu->getRutas(), $vista);
+    
 	
 }else{
 

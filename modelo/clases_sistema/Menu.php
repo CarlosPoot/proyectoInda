@@ -26,24 +26,18 @@ class Menu {
 						om.vista,
 						om.controlador,
 						om.controlador_src
-				FROM usuario_rol ur 
-				INNER JOIN menu_rol mr 
-                ON ur.id_rol = mr.id_rol 
-                INNER JOIN menu m 
-				ON m.id_menu = mr.id_menu 
-				INNER JOIN menu_opcion mo
-				ON m.id_menu = mo.id_menu
-				INNER JOIN opcion_menu om
-				ON mo.id_opcion_menu = om.id_opcion_menu 
+				FROM rol_usuario ur 
+				INNER JOIN menu_rol mr ON ur.id_rol = mr.id_rol 
+                INNER JOIN menu m  ON m.id_menu = mr.id_menu 
+				INNER JOIN menu_opcion mo ON m.id_menu = mo.id_menu
+				INNER JOIN opcion_menu om ON mo.id_opcion = om.id_opcion_menu 
                 WHERE ur.id_usuario = :id_usuario 
-				GROUP BY om.descripcion, om.url
-				ORDER BY mo.orden";
+				GROUP BY om.descripcion, om.url";
 		
 		try {
 
 			$st = $conexion->prepare ( $sql );
 			$st->bindValue ( ':id_usuario', $idUsuario, PDO::PARAM_INT );
-				
 			if ($st->execute ()) {
 				$controladores = array ();
 				$opciones = $st->fetchAll ( PDO::FETCH_ASSOC );
@@ -116,8 +110,14 @@ class Menu {
 				$this->setRutas ( $rutas );
 				$this->setScripts ( $scripts );
 				$this->setMenus ( "<script>var menu = " . json_encode ( $menu ) . "</script>" );
-			}
+			}else{
+                $respuesta = new stdClass();
+                $respuesta->success = false;
+                $respuesta->mensaje = "Error al obtener menu";
+                return $respuesta;
+            }
 		} catch ( PDOException $e ) {
+            var_dump( $e);
 		}
 	}
 	
@@ -137,21 +137,14 @@ class Menu {
 			<script src="controlador/ServicioAjax.js?' . $this->token . '"></script>
 			<script src="controlador/ServicioUsuario.js?' . $this->token . '"></script>
 			<script src="controlador/AppController.js?' . $this->token . '"></script>
-			<script src="controlador/MenuPrincipalController.js?' . $this->token . '"></script>
-			<script src="controlador/HomeController.js?' . $this->token . '"></script>
-			<script src="controlador/ContrasenaController.js?' . $this->token . '"></script>
-			<script src="controlador/DocumentosController.js?' . $this->token . '"></script>';
+			<script src="controlador/MenuPrincipalController.js?' . $this->token . '"></script>';
 	}
 	
 	private function getDependenciasBottom(){
-		return '<script src="libs/local/Funciones.js?' . $this->token . '"></script>
-				<link rel="stylesheet"  href="libs/bootstrap-3.3.6/css/bootstrap.min.css?' . $this->token . '"/>
-				<link rel="stylesheet" href="libs/local/custom_bootstrap.css?' . $this->token . '" />
+		return '<link rel="stylesheet"  href="libs/b4/css/bootstrap.min.css?' . $this->token . '"/>
 				<link rel="stylesheet" href="libs/ng-table/dist/ng-table.min.css?' . $this->token . '" />
-				<link rel="stylesheet" href="libs/jquery-ui/jquery-ui.min.css" />
-				<link rel="stylesheet" href="libs/local/animaciones.css?' . $this->token . '" />
-				<link rel="stylesheet" href="libs/local/estilo.css?' . $this->token . '" />
-				<link rel="stylesheet" href="libs/local/simple-sidebar.css?' . $this->token . '" />';
+				<link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
+			    <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />';
 		
 	}
 	
@@ -171,18 +164,8 @@ class Menu {
 	private function getDefaultRutas(){
 		return "{
 					url : '/',
-					template :  'vista/Home.html?$this->token',
-					controller : 'homeController'
-				},
-				{
-					url : '/cambio_contrasena',
-					template : 'vista/CambioContrasena.html" . "?$this->token" . "',
-					controller : 'contrasenaController'
-				},
-				{
-					url : '/manuales',
-					template : 'vista/Documentos.html" . "?$this->token" . "',
-					controller : 'documentosController'
+					template :  'vista/ConsultaUsuario.html?$this->token',
+					controller : 'consultaUsuarioController'
 				},";
 	}
     

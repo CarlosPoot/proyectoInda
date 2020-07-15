@@ -5,16 +5,19 @@ class UsuarioBean{
 	private $nombre;
 	private $usuario;
 	private $contrasena;
-	private $roles;
+    private $roles;
+    private $ubicacion;
 	private $status;
 	
 	function __construct($input = null, $isJson = false){
 		if($input !== null){
 			$prefijo = "";
-			
 			if(!$isJson){
-				$prefijo = self::$prefijo . ".";
-			}
+                $prefijo = self::$prefijo . ".";
+                $this->setUbicacion(new UbicacionBean($input));
+			}else{
+                $this->setUbicacion( isset($input[$prefijo . "ubicacion"]) ? new UbicacionBean($input[$prefijo . "ubicacion"], true) : new UbicacionBean());
+            }
 			
 			$this->setId(isset($input[$prefijo . "id"]) ? $input[$prefijo . "id"] : "");
 			$this->setNombre(isset($input[$prefijo . "nombre"]) ? $input[$prefijo . "nombre"] : "");
@@ -36,7 +39,8 @@ class UsuarioBean{
 			$this->usuario = "";
 			$this->contrasena = "";
 			$this->roles = array();
-			$this->status = "";
+            $this->status = "";
+            $this->ubicacion = new UbicacionBean();
         }
 	}
 
@@ -84,6 +88,9 @@ class UsuarioBean{
         $this->roles = $roles;
     }
     
+    public function setRol($rol){
+        $this->roles[] = $rol;
+    }
     
 	public function getStatus(){
         return $this->status;
@@ -92,14 +99,29 @@ class UsuarioBean{
 	public function setStatus($status){
         $this->status = $status;
     }
+    
+    public function getUbicacion(){
+        return $this->ubicacion;
+    }
 
+	public function setUbicacion($ubicacion){
+        $this->ubicacion = $ubicacion;
+    }
 	
 	public function jsonSerialize($dataset = 0){
+        $roles = array();
+        foreach( $this->getRoles() as $rol ){
+            $roles[] = $rol->jsonSerialize();
+        }
+
 		$j = new stdClass();
 		$j->id = intval($this->getId());
 		$j->nombre = $this->getNombre();
 		$j->usuario = $this->getUsuario();
-		$j->status = $this->getStatus();
+        $j->status = $this->getStatus();
+        $j->ubicacion = $this->getUbicacion()->jsonSerialize();
+        $j->roles = $roles;
 		return $j;
 	}
 }
+

@@ -48,20 +48,24 @@ class LoginController extends AutenticacionController{
 
 	public function getUsuarioLogueado(){
         $sesion = new Session();
-		$respuesta = new stdClass();
-        if( $sesion->isOpen() ){
+        $respuesta = new stdClass();
+        $conexion = new Conexion();
+        $usuarioDao = new UsuarioDao($conexion);
+		$r = $usuarioDao->getById( $sesion->getIdSesion() );
+        if( $r instanceof UsuarioBean ){
 
             $respuesta->success = true;
-            $respuesta->usuario = $sesion->getIdSesion();
+            $respuesta->usuario = $r->jsonSerialize();
             $respuesta->timeout = $sesion->getTimeOut();
             $respuesta->tiempoSesion = date('H:i:s', $sesion->getVariableSesion(Constantes::$ID_SESSION . "_TIME"));
             $respuesta->respuesta = true;
             return $respuesta;
 
         }else{
+
             $sesion->cerrarSesion();
             $respuesta->success = true;
-            $respuesta->respuesta = false;
+            $respuesta->mensaje = $usuarioDao->getError();
             return $respuesta;
         }
 	}

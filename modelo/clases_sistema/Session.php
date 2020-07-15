@@ -19,6 +19,12 @@ class Session{
         $_SESSION[$this->idSesion] = $id;
         $this->setTime();
     }
+
+    public function cerrarSesion(){
+		if ($this->isOpen()){
+			unset ($_SESSION[$this->idSesion]);
+		}
+	}
     
     public function getIdSesion( ){
         return $_SESSION[$this->idSesion];
@@ -36,6 +42,14 @@ class Session{
 		return isset($_SESSION[Constantes::$ID_SESSION . "_TIME"]) ? $_SESSION[Constantes::$ID_SESSION . "_TIME"] : 0;
 	}
     
+    public function getVariableSesion($id){
+		return isset ($_SESSION[$id]) ? $_SESSION[$id] : false;
+    }
+    
+    public function getTimeOut(){
+		return self::$timeoutSeconds;
+	}
+
     public function validarTiempo(){
 		$t1 = $_SESSION[Constantes::$ID_SESSION . "_TIME"];
 		$t2 = time();

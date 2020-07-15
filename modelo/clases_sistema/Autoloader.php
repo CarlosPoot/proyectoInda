@@ -16,6 +16,8 @@ class Autoloader {
         'AutenticacionController'	=> 'clases_controlador/AutenticacionController.php',
         'LoginController'	        => 'clases_controlador/LoginController.php',
         'UsuarioBean' 				=> 'clases_modelo/bean/UsuarioBean.php',
+        'RolBean' 				=> 'clases_modelo/bean/RolBean.php',
+        'UbicacionBean' 				=> 'clases_modelo/bean/UbicacionBean.php',
         'Dao' 													=> 'clases_modelo/dao/Dao.php',
         'UsuarioDao' 				=> 'clases_modelo/dao/UsuarioDao.php',
     );
