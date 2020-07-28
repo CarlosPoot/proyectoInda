@@ -143,7 +143,8 @@ class Menu {
 	private function getDependenciasBottom(){
 		return '<link rel="stylesheet"  href="libs/b4/css/bootstrap.min.css?' . $this->token . '"/>
 				<link rel="stylesheet" href="libs/ng-table/dist/ng-table.min.css?' . $this->token . '" />
-				<link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
+                <link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
+                <link rel="stylesheet" href="libs/font-awesome/css/all.min.css?' . $this->token . '"/>
 			    <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />';
 		
 	}

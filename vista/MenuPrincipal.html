@@ -1,60 +1,98 @@
 <!DOCTYPE html>
-<html ng-app="app" lang="es" >
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<title> Bufete Juridico</title>
-		
-		@scriptMenus
-		@script
-		@scriptControladores
-		
-	</head>
-	<body ng-controller="menuPrincipalController">		
-        <!-- Loading -->
-        <div id="loadingPrincipal">
-            <div class="overflow"></div>
-            <div class="loading">
-                <h3 id="textoLoading"></h3>
-                <div class="sk-fading-circle">
-                    <div class="sk-circle1 sk-circle"></div>
-                    <div class="sk-circle2 sk-circle"></div>
-                    <div class="sk-circle3 sk-circle"></div>
-                    <div class="sk-circle4 sk-circle"></div>
-                    <div class="sk-circle5 sk-circle"></div>
-                    <div class="sk-circle6 sk-circle"></div>
-                    <div class="sk-circle7 sk-circle"></div>
-                    <div class="sk-circle8 sk-circle"></div>
-                    <div class="sk-circle9 sk-circle"></div>
-                    <div class="sk-circle10 sk-circle"></div>
-                    <div class="sk-circle11 sk-circle"></div>
-                    <div class="sk-circle12 sk-circle"></div>
-                </div>
-            </div>
-        </div>        
-        <div ng-view></div>    
+<html ng-app="app" lang="es">
 
-        <div class="modal" id="modalMensaje"  tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"  id="tituloModalMensaje">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> Bufete Juridico</title>
+
+    @scriptMenus
+    @script
+    @scriptControladores
+
+</head>
+
+<body ng-controller="menuPrincipalController">
+    <!-- Loading -->
+    <div id="loadingPrincipal">
+        <div class="overflow"></div>
+        <div class="loading">
+            <h3 id="textoLoading"></h3>
+            <div class="sk-fading-circle">
+                <div class="sk-circle1 sk-circle"></div>
+                <div class="sk-circle2 sk-circle"></div>
+                <div class="sk-circle3 sk-circle"></div>
+                <div class="sk-circle4 sk-circle"></div>
+                <div class="sk-circle5 sk-circle"></div>
+                <div class="sk-circle6 sk-circle"></div>
+                <div class="sk-circle7 sk-circle"></div>
+                <div class="sk-circle8 sk-circle"></div>
+                <div class="sk-circle9 sk-circle"></div>
+                <div class="sk-circle10 sk-circle"></div>
+                <div class="sk-circle11 sk-circle"></div>
+                <div class="sk-circle12 sk-circle"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown" ng-repeat="menu in menus" >
+                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ menu.menu  }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#{{opcion.url}}" ng-repeat="opcion in menu.opciones">{{ opcion.nombre }}</a>
                     </div>
-                    <div class="modal-body">
-                        <p id="bodyModalMensaje"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
-                    </div>
+                </li>
+            </ul>
+            <div class="btn-group ml-2 text-white" id="opcionesUsuario">
+                <!-- con nombre de usuario -->
+                <div id="btnGroupDrop1" data-toggle="dropdown" aria-expanded="true" class="dropdown-toggle d-none d-md-block text-capitalize">
+                    <i class="fas fa-user pr-2 "></i>Usuario
+                </div>
+                <!-- solo icono usuario -->
+                <div id="btnGroupDrop1" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle d-flex align-items-center d-md-none ml-2">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="dropdown-menu material2 animated fadeIn" style="right: 0;left: unset;"  aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" > <i class="fas fa-key"></i> Cambiar Contraseña</a>
+                    <a class="dropdown-item" ><i class="fas fa-question"></i> Ayuda</a>
+                    <a class="dropdown-item" ><i class="fas fa-sign-out-alt"></i> Salir</a>
                 </div>
             </div>
         </div>
+    </nav>
 
-        
-	</body>
+    <div ng-view class="mt-5" ></div>
+
+    <div class="modal" id="modalMensaje" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalMensaje">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="bodyModalMensaje"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
 </html>

@@ -34,10 +34,9 @@
         </div>
     </div>
 
-
     <div class="container">
         <div class="row mt-4">
-            <div class="col-7 offset-3 mt-5 bg-white rounded">
+            <form class="col-7 offset-3 mt-5 bg-white " style="border-radius: 15px;">
                 <div class="row">
                     <div class="col-12 text-center d-flex align-items-center justify-content-center" style="height: 150px; background-image: url(resources/bg-01.jpg);"></div>
                 </div>
@@ -55,15 +54,15 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label text-center">Contraseña</label>
                     <div class="col-sm-10">
-                        <input type="text"  ng-model="contrasena"  class="form-control-plaintext" placeholder="">
+                        <input type="password"  ng-model="contrasena"  class="form-control-plaintext" placeholder="">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 text-center mb-4">
-                        <button type="button" class="btn btn-success rounded"  ng-click="iniciarSesion()" >Aceptar</button>
+                        <button type="submit" class="btn btn-success rounded"  ng-click="iniciarSesion()" >Aceptar</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
