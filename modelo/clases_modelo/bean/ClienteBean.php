@@ -1,7 +1,11 @@
 <?php
 class ClienteBean{
-	private static $prefijo = "clt";
+    
+    private static $prefijo = "clt";
     private $id;
+
+
+
     private $numCliente;
 	private $nombre;
 	private $apellidos;
@@ -18,4 +22,7 @@ class ClienteBean{
     private $dias;
     private $oficina;
     private $status;
+
+    
+
 }

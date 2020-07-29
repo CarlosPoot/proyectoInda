@@ -1,1 +1,118 @@
-<h1>Alta usuaruio</h1>
+
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-12">
+            <h3>Alta de usuario</h3>
+            <hr class="my-2" >
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="numeroCliente">Número de cliente</label>
+              <input type="text" class="form-control" name="numeroCliente" ng-model="cliente.numeroCliente" placeholder="Ingresa número de cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="oficina">Oficina</label>
+                <input type="text" class="form-control" name="oficina" ng-model="cliente.oficina" placeholder="Ingresa oficia del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="nombre">Nombre(s)</label>
+                <input type="text" class="form-control" name="nombre" ng-model="cliente.nombre" placeholder="Ingresa nombre del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="apellido">Apellido(s)</label>
+                <input type="text" class="form-control" name="apellido" ng-model="cliente.apellido" placeholder="Ingresa el apellido del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" ng-model="cliente.nombre" placeholder="Ingresa nombre del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="nss">NSS</label>
+                <input type="number" class="form-control" name="nss" ng-model="cliente.nss" placeholder="Ingresa NSS del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="curp">CURP</label>
+                <input text="text" class="form-control" name="curp" ng-model="cliente.curp" placeholder="Ingresa el CURP del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="afore">Afore</label>
+                <input text="text" class="form-control" name="afore" ng-model="cliente.afore" placeholder="Ingresa el afore del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4 ">
+            <div class="form-group">
+                <label for="asesor">Asesor</label>
+                <input type="text" class="form-control" name="asesor" ng-model="cliente.asesor" placeholder="Ingresa el asesor del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="sc">SC</label>
+                <input type="text" class="form-control" name="sc" ng-model="cliente.sc" placeholder="Ingresa SC del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="sd">SD</label>
+                <input type="text" class="form-control" name="sd" ng-model="cliente.sd" placeholder="Ingresa SD del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="fb">FB</label>
+                <div class="d-flex">
+                    <input type="text" class="form-control" ng-model="cliente.fb" name="fb" placeholder="Ingresa fecha de baja del cliente" change-month="true" change-year="true" datepicker readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="sbc">SBC</label>
+                <input type="text" class="form-control" name="sbc" ng-model="cliente.sbc" placeholder="Ingresa SBC del cliente">
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="alta">Alta</label>
+                <div class="d-flex">
+                    <input type="text" class="form-control" ng-model="cliente.alta" name="alta" placeholder="Ingresa el alta del cliente" change-month="true" change-year="true" datepicker readonly >
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+                <label for="diasTranscurridos">47 días</label>
+                <div class="d-flex">
+                    <input type="text" class="form-control" ng-model="cliente.diasTranscurridos" name="diasTranscurridos" placeholder="Ingresa fecha de 47 días" change-month="true" change-year="true" datepicker readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-12">
+            <div class="form-group">
+                <label for="comentarios">Comentarios</label>
+                <textarea name="comentarios" class="form-control" ng-model="cliente.comentarios" placeholder="Comentarios del alta"  rows="1"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-info" style="border-radius:50%;position: fixed; bottom: 30px; right: 15px; z-index: 105;height: 50px; width: 50px;font-size: 1.5rem;" data-toggle="tooltip" data-placement="left" title="Guardar" >
+    <i class="fas fa-save fa-1x"></i>
+</button>

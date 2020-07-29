@@ -36,7 +36,8 @@ app.controller('menuPrincipalController', function($scope, $q, $timeout, servici
         timeout = respuesta[0].timeout * 1000 + 20000;
         loading(false);
 	});
-	
+    
+    //cerrar sesión
 	$scope.cerrarSesion = function(){
 		var params = {
 			controlador : "Login",
