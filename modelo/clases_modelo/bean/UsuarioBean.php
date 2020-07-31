@@ -6,7 +6,7 @@ class UsuarioBean{
 	private $usuario;
 	private $contrasena;
     private $roles;
-    private $ubicacion;
+    private $oficina;
 	private $status;
 	
 	function __construct($input = null, $isJson = false){
@@ -14,9 +14,9 @@ class UsuarioBean{
 			$prefijo = "";
 			if(!$isJson){
                 $prefijo = self::$prefijo . ".";
-                $this->setUbicacion(new UbicacionBean($input));
+                $this->setOficina(new OficinaBean($input));
 			}else{
-                $this->setUbicacion( isset($input[$prefijo . "ubicacion"]) ? new UbicacionBean($input[$prefijo . "ubicacion"], true) : new UbicacionBean());
+                $this->setOficina( isset($input[$prefijo . "oficina"]) ? new OficinaBean($input[$prefijo . "oficina"], true) : new OficinaBean());
             }
 			
 			$this->setId(isset($input[$prefijo . "id"]) ? $input[$prefijo . "id"] : "");
@@ -40,7 +40,7 @@ class UsuarioBean{
 			$this->contrasena = "";
 			$this->roles = array();
             $this->status = "";
-            $this->ubicacion = new UbicacionBean();
+            $this->oficina = new OficinaBean();
         }
 	}
 
@@ -100,12 +100,12 @@ class UsuarioBean{
         $this->status = $status;
     }
     
-    public function getUbicacion(){
-        return $this->ubicacion;
+    public function getOficina(){
+        return $this->oficina;
     }
 
-	public function setUbicacion($ubicacion){
-        $this->ubicacion = $ubicacion;
+	public function setOficina($oficina){
+        $this->oficina = $oficina;
     }
 	
 	public function jsonSerialize($dataset = 0){
@@ -119,7 +119,7 @@ class UsuarioBean{
 		$j->nombre = $this->getNombre();
 		$j->usuario = $this->getUsuario();
         $j->status = $this->getStatus();
-        $j->ubicacion = $this->getUbicacion()->jsonSerialize();
+        $j->oficina = $this->getOficina()->jsonSerialize();
         $j->roles = $roles;
 		return $j;
 	}

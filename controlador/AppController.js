@@ -43,3 +43,29 @@ app.directive('datepicker', function() {
         }
     }
 });
+
+//servicio para fecha
+app.factory('fecha', function() { //servicio para parsear fechas
+    return {
+        fechaconformato: function(fecha,formato) {
+            mes = fecha.getMonth() + 1;
+            dia = fecha.getDate();
+            dia = (dia < 10) ? "0" + dia.toString() : dia.toString();
+            mes = (mes < 10) ? "0" + mes.toString() : mes.toString();
+            if( formato == 2 ){
+                fechaString = dia + "-" + mes + "-" + fecha.getFullYear().toString();
+            }else{
+                fechaString = fecha.getFullYear().toString() + "-" + mes + "-" + dia;
+            }
+            return fechaString;
+        },
+        formatoSQL: function(fecha) {
+            fechaArray = fecha.split("-");
+            mes  = fechaArray[1];
+            dia  = fechaArray[0];
+            year = fechaArray[2];
+            fechaString = year + "-" + mes + "-" + dia;
+            return fechaString;
+        }
+    }
+})

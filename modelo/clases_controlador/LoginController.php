@@ -21,9 +21,9 @@ class LoginController extends AutenticacionController{
 			if($u->getId() != ""){
 				$status = $u->getStatus();
 				if($status["id"] == Constantes::$USUARIO_ACTIVO){
-					
+                    
                     $sesion = new Session();
-                    $sesion->iniciarSesion($u->getId());
+                    $sesion->iniciarSesion($u->getId(), $u->getOficina()->getId());
                     $respuesta->success = true;
                     $respuesta->respuesta = true;
 					

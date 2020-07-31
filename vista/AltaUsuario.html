@@ -6,18 +6,11 @@
             <hr class="my-2" >
         </div>
     </div>
-
     <div class="row mt-2">
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
               <label for="numeroCliente">Número de cliente</label>
-              <input type="text" class="form-control" name="numeroCliente" ng-model="cliente.numeroCliente" placeholder="Ingresa número de cliente">
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="form-group">
-                <label for="oficina">Oficina</label>
-                <input type="text" class="form-control" name="oficina" ng-model="cliente.oficina" placeholder="Ingresa oficia del cliente">
+              <input type="text" class="form-control" name="numeroCliente" ng-model="cliente.numeroCliente" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa número de cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
@@ -59,13 +52,13 @@
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="sc">SC</label>
-                <input type="text" class="form-control" name="sc" ng-model="cliente.sc" placeholder="Ingresa SC del cliente">
+                <input type="number" class="form-control" name="sc" ng-model="cliente.sc" placeholder="Ingresa SC del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="sd">SD</label>
-                <input type="text" class="form-control" name="sd" ng-model="cliente.sd" placeholder="Ingresa SD del cliente">
+                <input type="number" class="form-control" name="sd" ng-model="cliente.sd" placeholder="Ingresa SD del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
@@ -107,6 +100,6 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-info" style="border-radius:50%;position: fixed; bottom: 30px; right: 15px; z-index: 105;height: 50px; width: 50px;font-size: 1.5rem;" data-toggle="tooltip" data-placement="left" title="Guardar" >
+<button type="button" class="btn btn-info" ng-click="guardarCliente()" style="border-radius:50%;position: fixed; bottom: 30px; right: 15px; z-index: 105;height: 50px; width: 50px;font-size: 1.5rem;" data-toggle="tooltip" data-placement="left" title="Guardar" >
     <i class="fas fa-save fa-1x"></i>
 </button>

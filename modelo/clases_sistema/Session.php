@@ -2,12 +2,14 @@
 class Session{
 
     private $idSesion;
+    private $oficinaSesion;
     private $timeSesion;
     private static $band = false;
 	private static $timeoutSeconds = 1800;
 
     function __construct(){
         $this->idSesion = Constantes::$ID_SESSION;
+        $this->oficinaSesion = Constantes::$OFICINA_SESSION;
         if(self::$band == false){
 			session_set_cookie_params(36000);
 			session_start();
@@ -15,8 +17,9 @@ class Session{
 		}
     }
 
-    public function iniciarSesion( $id  ){
+    public function iniciarSesion( $id, $oficina ){
         $_SESSION[$this->idSesion] = $id;
+        $_SESSION[$this->oficinaSesion] = $oficina;
         $this->setTime();
     }
 

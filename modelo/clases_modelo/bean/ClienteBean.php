@@ -18,7 +18,6 @@ class ClienteBean{
     private $alta;
     private $diasTranscurridos;
     private $comentarios;
-    private $ubicacion;
     private $status;
 
     function __construct($input = null, $isJson = false){
@@ -27,14 +26,13 @@ class ClienteBean{
             
 			if(!$isJson){
                 $prefijo = self::$prefijo . ".";
-                $this->setUbicacion(new UbicacionBean($input));
+                $this->setOficina(new OficinaBean($input));
 			}else{
-                $this->setUbicacion( isset($input[$prefijo . "ubicacion"]) ? new UbicacionBean($input[$prefijo . "ubicacion"], true) : new UbicacionBean());
+                $this->setOficina( isset($input[$prefijo . "ubicacion"]) ? new OficinaBean($input[$prefijo . "ubicacion"], true) : new OficinaBean());
             }
 			
 			$this->setId(isset($input[$prefijo . "id"]) ? $input[$prefijo . "id"] : "");
 			$this->setNumeroCliente(isset($input[$prefijo . "numeroCliente"]) ? $input[$prefijo . "numeroCliente"] : "");
-			$this->setOficina(isset($input[$prefijo . "oficina"]) ? $input[$prefijo . "oficina"] : "");
 			$this->setNombre(isset($input[$prefijo . "nombre"]) ? $input[$prefijo . "nombre"] : "");
             $this->setApellido(isset($input[$prefijo . "apellido"]) ? $input[$prefijo . "apellido"] : "");
             $this->setNss(isset($input[$prefijo . "nss"]) ? $input[$prefijo . "nss"] : "");
@@ -54,7 +52,6 @@ class ClienteBean{
             
 			$this->id = "";
 			$this->numeroCliente = "";
-			$this->oficina = "";
             $this->nombre = "";
             $this->nss = "";
             $this->curp = "";
@@ -67,9 +64,8 @@ class ClienteBean{
             $this->alta = "";
             $this->diasTranscurridos = "";
             $this->comentarios = "";
-
             $this->status = "";
-            $this->ubicacion = new UbicacionBean();
+            $this->oficina = new OficinaBean();
         }
     }
     
@@ -212,12 +208,13 @@ class ClienteBean{
 	public function setStatus($status){
         $this->status = $status;
     }
-    
-    public function getUbicacion(){
-        return $this->ubicacion;
-    }
 
-	public function setUbicacion($ubicacion){
-        $this->ubicacion = $ubicacion;
-    }
+    public function jsonSerialize(){
+		$j = new stdClass();
+		
+		$j->id = intval($this->getId());
+		$j->numeroCliente = $this->getNumeroCliente();
+		
+		return $j;
+	}
 }

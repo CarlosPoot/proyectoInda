@@ -1,17 +1,55 @@
 
-app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioAjax, servicioRutas, servicioUsuario){
+app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioAjax, fecha , servicioUsuario){
     
 
     $scope.cliente = {};
     $('[data-toggle="tooltip"]').tooltip();
 
-    
+    $scope.$watch('cliente.alta', function(newVal, oldVal){
+        if( newVal ){
+
+            fechaArray = newVal.split("-");
+            nuevaFecha = new Date(Date.UTC( fechaArray[2] , Number(fechaArray[1]-1), fechaArray[0] , 0, 0, 0));
+            nuevaFecha.setDate(  nuevaFecha.getDate() + 48 );
+            $scope.cliente.diasTranscurridos =  fecha.fechaconformato(nuevaFecha, 2);
+            
+        }
+
+    }, true);
+
+    $scope.guardarCliente = function(){
+
+        console.log( $scope.cliente )
+
+        if( !validarCliente() ){
+            return false;
+        }
+
+        var clienteSend   = angular.copy( $scope.cliente );
+        clienteSend.fb    = fecha.formatoSQL(clienteSend.fb);
+        clienteSend.alta  = fecha.formatoSQL(clienteSend.alta);
+        
+        loading(true,"Creando cliente...");
+		var params = {
+			controlador : "Cliente",
+			metodo : "crearCliente",
+			cliente : clienteSend
+        };
+        
+        $q.all([servicioAjax.llamadaAjax(params, function( respuesta ){
+            loading(false);
+            mostrarMensajeModal("Operación exitosa", respuesta.mensaje );
+            $scope.cliente = {};
+		}, function(){})]).then(function(respuestas){
+			loading(false, "");
+		});
+    }
+
+
     var validarCliente = function(){
+        console.log( $scope.cliente.numeroCliente )
         if( !$scope.cliente.numeroCliente ){
             mostrarMensajeModal("Datos incompletos", "Ingrese el número de cliente por favor");
-            return false;
-        }else if( !$scope.cliente.oficina ){
-            mostrarMensajeModal("Datos incompletos", "Ingrese el número del cliente por favor");
             return false;
         }else if( !$scope.cliente.nombre ){
             mostrarMensajeModal("Datos incompletos", "Ingrese el nombre del cliente por favor");
@@ -20,7 +58,7 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
             mostrarMensajeModal("Datos incompletos", "Ingrese el apellido del cliente por favor");
             return false;
         }else if( !$scope.cliente.nss ){
-            mostrarMensajeModal("Datos incompletos", "Ingrese el nss del cliente por favor");
+            mostrarMensajeModal("Datos incompletos", "Ingrese el NSS del cliente por favor");
             return false;
         }else if( !$scope.cliente.curp ){
             mostrarMensajeModal("Datos incompletos", "Ingrese el curp del cliente por favor");
@@ -29,7 +67,7 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
             mostrarMensajeModal("Datos incompletos", "Ingrese el afore del cliente por favor");
             return false;
         }else if( !$scope.cliente.sc ){
-            mostrarMensajeModal("Datos incompletos", "Ingrese el NSS de cliente por favor");
+            mostrarMensajeModal("Datos incompletos", "Ingrese el SC de cliente por favor");
             return false;
         }else if( !$scope.cliente.sd ){
             mostrarMensajeModal("Datos incompletos", "Ingrese las semnas descontadas de cliente por favor");
@@ -47,7 +85,8 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
             mostrarMensajeModal("Datos incompletos", "Ingrese comentario por favor");
             return false;
         }
-        
+
+        return true;
     }
    
       
