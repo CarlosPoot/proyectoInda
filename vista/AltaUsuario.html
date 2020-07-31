@@ -34,12 +34,6 @@
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" ng-model="cliente.nombre" placeholder="Ingresa nombre del cliente">
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="form-group">
                 <label for="nss">NSS</label>
                 <input type="number" class="form-control" name="nss" ng-model="cliente.nss" placeholder="Ingresa NSS del cliente">
             </div>
@@ -100,7 +94,7 @@
             <div class="form-group">
                 <label for="diasTranscurridos">47 días</label>
                 <div class="d-flex">
-                    <input type="text" class="form-control" ng-model="cliente.diasTranscurridos" name="diasTranscurridos" placeholder="Ingresa fecha de 47 días" change-month="true" change-year="true" datepicker readonly>
+                    <input type="text" class="form-control" ng-model="cliente.diasTranscurridos" name="diasTranscurridos" placeholder="Ingresa fecha de 47 días" change-month="false" change-year="false" readonly>
                 </div>
             </div>
         </div>
