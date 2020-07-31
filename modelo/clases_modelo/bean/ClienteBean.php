@@ -3,9 +3,6 @@ class ClienteBean{
     
     private static $prefijo = "clt";
     private $id;
-
-
-
     private $numeroCliente;
 	private $oficina;
 	private $nombre;
@@ -26,7 +23,8 @@ class ClienteBean{
 
     function __construct($input = null, $isJson = false){
 		if($input !== null){
-			$prefijo = "";
+            $prefijo = "";
+            
 			if(!$isJson){
                 $prefijo = self::$prefijo . ".";
                 $this->setUbicacion(new UbicacionBean($input));
@@ -45,22 +43,15 @@ class ClienteBean{
 			$this->setAsesor(isset($input[$prefijo . "asesor"]) ? $input[$prefijo . "asesor"] : "");
             $this->setSc(isset($input[$prefijo . "sc"]) ? $input[$prefijo . "sc"] : "");
             $this->setSd(isset($input[$prefijo . "sd"]) ? $input[$prefijo . "sd"] : "");
-            $this->setSb(isset($input[$prefijo . "fb"]) ? $input[$prefijo . "fb"] : "");
+            $this->setFb(isset($input[$prefijo . "fb"]) ? $input[$prefijo . "fb"] : "");
             $this->setSbc(isset($input[$prefijo . "sbc"]) ? $input[$prefijo . "sbc"] : "");
 			$this->setAlta(isset($input[$prefijo . "alta"]) ? $input[$prefijo . "alta"] : "");
 			$this->setDiasTranscurridos(isset($input[$prefijo . "diasTranscurridos"]) ? $input[$prefijo . "diasTranscurridos"] : "");
 			$this->setComentarios(isset($input[$prefijo . "comentarios"]) ? $input[$prefijo . "comentarios"] : "");
             $this->setStatus(isset($input[$prefijo . "status"]) ? $input[$prefijo . "status"] : "");
             
-			/**$r = array();
-			if(isset($input[$prefijo . "roles"]) && is_array($input[$prefijo . "roles"])){
-				foreach($input[$prefijo . "roles"] as $rol){
-					$r[] = new RolBean($rol, $isJson);
-				}
-			}
-			
-			$this->setRoles($r);**/
 		}else{
+            
 			$this->id = "";
 			$this->numeroCliente = "";
 			$this->oficina = "";
@@ -77,7 +68,6 @@ class ClienteBean{
             $this->diasTranscurridos = "";
             $this->comentarios = "";
 
-			//$this->roles = array();
             $this->status = "";
             $this->ubicacion = new UbicacionBean();
         }
