@@ -3,9 +3,6 @@ class ClienteBean{
     
     private static $prefijo = "clt";
     private $id;
-
-
-
     private $numeroCliente;
 	private $oficina;
 	private $nombre;
