@@ -2,6 +2,7 @@
 <div class="container pt-4">
     <div class="row">
         <div class="col-12">
+            <br>
             <h3>Alta de usuario</h3>
             <hr class="my-2" >
         </div>
@@ -16,13 +17,13 @@
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="nombre">Nombre(s)</label>
-                <input type="text" class="form-control" name="nombre" ng-model="cliente.nombre" placeholder="Ingresa nombre del cliente">
+                <input type="text" class="form-control" name="nombre" ng-model="cliente.nombre" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa nombre del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="apellido">Apellido(s)</label>
-                <input type="text" class="form-control" name="apellido" ng-model="cliente.apellido" placeholder="Ingresa el apellido del cliente">
+                <input type="text" class="form-control" name="apellido" ng-model="cliente.apellido" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa el apellido del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
@@ -34,19 +35,19 @@
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="curp">CURP</label>
-                <input text="text" class="form-control" name="curp" ng-model="cliente.curp" placeholder="Ingresa el CURP del cliente">
+                <input text="text" class="form-control" name="curp" ng-model="cliente.curp" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa el CURP del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="afore">Afore</label>
-                <input text="text" class="form-control" name="afore" ng-model="cliente.afore" placeholder="Ingresa el afore del cliente">
+                <input text="text" class="form-control" name="afore" ng-model="cliente.afore" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa el afore del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4 ">
             <div class="form-group">
                 <label for="asesor">Asesor</label>
-                <input type="text" class="form-control" name="asesor" ng-model="cliente.asesor" placeholder="Ingresa el asesor del cliente">
+                <input type="text" class="form-control" name="asesor" ng-model="cliente.asesor" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa el asesor del cliente">
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
@@ -91,10 +92,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-12">
+        <div class="col-12 col-sm-6 col-md-8">
             <div class="form-group">
                 <label for="comentarios">Comentarios</label>
-                <textarea name="comentarios" class="form-control" ng-model="cliente.comentarios" placeholder="Comentarios del alta"  rows="1"></textarea>
+                <textarea name="comentarios" class="form-control" ng-model="cliente.comentarios" oninput="this.value = this.value.toUpperCase()" placeholder="Comentarios del alta"  rows="1"></textarea>
             </div>
         </div>
     </div>
