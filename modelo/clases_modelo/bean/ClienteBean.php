@@ -51,7 +51,8 @@ class ClienteBean{
 		}else{
             
 			$this->id = "";
-			$this->numeroCliente = "";
+            $this->numeroCliente = "";
+            $this->oficina = "";
             $this->nombre = "";
             $this->nss = "";
             $this->curp = "";
@@ -213,7 +214,22 @@ class ClienteBean{
 		$j = new stdClass();
 		
 		$j->id = intval($this->getId());
-		$j->numeroCliente = $this->getNumeroCliente();
+        $j->numeroCliente = $this->getNumeroCliente();
+        $j->oficina = $this->getOficina();
+        $j->nombre = $this->getNombre();
+        $j->apellido = $this->getApellido();
+        $j->nss = $this->getNss();
+        $j->curp = $this->getCurp();
+        $j->afore = $this->getAfore();
+        $j->sc = $this->getSc();
+        $j->sd = $this->getSd();
+        $j->fb = $this->getFb();
+        $j->sbc = $this->getSbc();
+        $j->alta = $this->getAlta();
+        $j->diasTranscuridos = $this->getDiasTranscurridos();
+        $j->comentarios = $this->getComentarios();
+        
+
 		
 		return $j;
 	}
