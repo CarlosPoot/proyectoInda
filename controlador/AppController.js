@@ -1,5 +1,5 @@
 
-var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ngTable']);
+var app = angular.module('app', ['ngRoute', 'ngAnimate', 'ui.grid','ui.grid.pagination', 'ui.grid.moveColumns', 'ui.grid.selection']);
 app.service('servicioRutas', servicioRutas);
 app.service('servicioAjax', ['$http','$q','$location','servicioRutas', servicioAjax]);
 app.service('servicioUsuario', ['servicioAjax', 'servicioRutas',servicioUsuario]);
@@ -17,6 +17,7 @@ app.config(function($routeProvider){
     });
     
 });
+
 
 // calendario
 app.directive('datepicker', function() {

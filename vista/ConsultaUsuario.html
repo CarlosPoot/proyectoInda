@@ -2,11 +2,20 @@
     <div class="row">
         <div class="col-12">
             <br>
-            <h3>Consulta Usuario</h3>
-            <hr class="my-2" >
+            <h3>Consulta Usuariooo</h3>
+            <hr class="my-2">
         </div>
     </div>
     <div class="row mt-2">
-        
+        <div class="col-md-12">
+            <div class="container contenedorGrid ui-grid-selectable" ui-grid="gridOptions" ui-grid-pagination ui-grid-move-columns ui-grid-selection>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="alert alert-primary text-center" role="alert" ng-show="tablaClientes.settings().dataset.length <= 0" >
+                <strong>No hay registro para mostrar</strong>
+            </div>
+        </div>
     </div>
 </div>

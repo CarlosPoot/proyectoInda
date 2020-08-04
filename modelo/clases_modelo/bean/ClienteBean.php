@@ -228,9 +228,6 @@ class ClienteBean{
         $j->alta = $this->getAlta();
         $j->diasTranscuridos = $this->getDiasTranscurridos();
         $j->comentarios = $this->getComentarios();
-        
-
-		
 		return $j;
 	}
 }
