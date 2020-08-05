@@ -1,0 +1,41 @@
+.pagination.ng-table-pagination li a,
+.ng-table-pager button {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.pagination.ng-table-pagination li a:hover,
+.ng-table-pager button:hover {
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.pagination.ng-table-pagination li a.active,
+.pagination li.ng-scope.active a,
+.ng-table-pager button.active {
+    background-color: #007bff !important;
+    color: #fff !important;
+    border: 1px solid #007bff !important;
+    z-index: 10 !important;
+}
+
+.clickable.ng-scope.ui-grid-icon-plus-squared,
+.clickable.ng-scope.ui-grid-icon-minus-squared{
+    font-size: 14px;
+}
+
+.ui-grid-pager-row-count-picker select{
+    padding-top: 3px !important;
+}
+
+.ui-grid-menu-button {
+    height: 31px !important;
+}

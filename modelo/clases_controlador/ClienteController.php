@@ -34,7 +34,7 @@ class ClienteController {
 
         if( $registros !== false  ){
             $totalRegistros = true;
-            // $totalRegistros = $monitorDao->getTotalRegistros( $input );
+            $totalRegistros = $clienteDao->getTotalRegistros( $input );
             if( $totalRegistros !== false ){
                 $tem = array();
                 foreach(  $registros as $r ){
@@ -43,17 +43,34 @@ class ClienteController {
 
                 $respuesta->success = true;
                 $respuesta->registros = $tem;
-                $respuesta->totalRegistros = 1000;
+                $respuesta->totalRegistros = $totalRegistros;
             }else{
                 $respuesta->success = false;
-                $respuesta->mensaje = $monitorDao->getError();
+                $respuesta->mensaje = $clienteDao->getError();
             }
         }else{
             $respuesta->success = false;
-            $respuesta->mensaje = $monitorDao->getError();
+            $respuesta->mensaje = $clienteDao->getError();
         }
 
         return $respuesta;
     }
     
+    public function getTotalClientes(){
+        $respuesta = new stdClass();
+        $input = new HttpInput();
+        $conexion = new Conexion();
+        $clienteDao = new ClienteDao( $conexion );
+
+        $totalRegistros = $clienteDao->getTotalRegistros( $input );
+        if( $totalRegistros !== false ){
+            $respuesta->success = true;
+            $respuesta->totalRegistros = $totalRegistros;
+        }else{
+            $respuesta->success = false;
+            $respuesta->mensaje = $clienteDao->getError();
+        }
+        return $respuesta;
+    }
+
 }

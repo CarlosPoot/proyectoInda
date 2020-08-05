@@ -153,6 +153,7 @@ class Menu {
                 <link rel="stylesheet" href="libs/font-awesome/css/all.min.css?' . $this->token . '"/>
                 <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />
 				<link rel="stylesheet" href="libs/jquery-ui/jquery-ui.min.css?' . $this->token . '" />
+				<link rel="stylesheet" href="libs/local/css/index.css?' . $this->token . '" />
                 <link rel="stylesheet" href="libs/ui-grid-4.8.1/ui-grid.min.css?' . $this->token . '" >';
 		
 	}

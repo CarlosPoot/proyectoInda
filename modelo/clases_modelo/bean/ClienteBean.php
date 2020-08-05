@@ -215,6 +215,7 @@ class ClienteBean{
 		
 		$j->id = intval($this->getId());
         $j->numeroCliente = $this->getNumeroCliente();
+        $j->asesor = $this->getAsesor();
         $j->oficina = $this->getOficina();
         $j->nombre = $this->getNombre();
         $j->apellido = $this->getApellido();
@@ -226,8 +227,9 @@ class ClienteBean{
         $j->fb = $this->getFb();
         $j->sbc = $this->getSbc();
         $j->alta = $this->getAlta();
-        $j->diasTranscuridos = $this->getDiasTranscurridos();
+        $j->diasTranscurridos = $this->getDiasTranscurridos();
         $j->comentarios = $this->getComentarios();
-		return $j;
+        return $j;
+        
 	}
 }

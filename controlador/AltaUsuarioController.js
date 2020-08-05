@@ -18,9 +18,6 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
     }, true);
 
     $scope.guardarCliente = function(){
-
-        console.log( $scope.cliente )
-
         if( !validarCliente() ){
             return false;
         }
@@ -28,6 +25,7 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
         var clienteSend   = angular.copy( $scope.cliente );
         clienteSend.fb    = fecha.formatoSQL(clienteSend.fb);
         clienteSend.alta  = fecha.formatoSQL(clienteSend.alta);
+        clienteSend.diasTranscurridos  = fecha.formatoSQL(clienteSend.diasTranscurridos);
         
         loading(true,"Creando cliente...");
 		var params = {

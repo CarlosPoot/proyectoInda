@@ -1,17 +1,33 @@
 <div class="container pt-4">
-    <div class="row">
+    <div class="row mt-3">
+        <div class="col-8">
+            <h3>Consulta cliente</h3>
+        </div>
+        <div class="col-4">
+            <select class="custom-select" ng-model="paginationOptions.estadoCliente" >
+                <option selected>Selecciona estado</option>
+                <option value="1">Inicial</option>
+                <option value="2">En Proceso</option>
+                <option value="3">Pendiente</option>
+                <option value="4">Ya cobro</option>
+                <option value="5">Por pagar</option>
+                <option value="6">Pagado</option>
+                <option value="7">No Pagado</option>
+              </select>
+        </div>
+    </div>
+    <div class="row" >
         <div class="col-12">
-            <br>
-            <h3>Consulta Usuariooo</h3>
             <hr class="my-2">
         </div>
     </div>
+
+    
     <div class="row mt-2">
         <div class="col-md-12">
-            <div class="container contenedorGrid ui-grid-selectable" ui-grid="gridOptions" ui-grid-pagination ui-grid-move-columns ui-grid-selection>
+            <div class="ui-grid-selectable" style="height: 450px;font-size: 12px;"  ui-grid="gridOptions" ui-grid-pagination ui-grid-move-columns ui-grid-selection>
             </div>
         </div>
-
         <div class="col-12">
             <div class="alert alert-primary text-center" role="alert" ng-show="tablaClientes.settings().dataset.length <= 0" >
                 <strong>No hay registro para mostrar</strong>
