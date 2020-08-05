@@ -1,3 +1,13 @@
 body{
-	background-color: rgb(219, 40, 174)!important;
+	background-color: rgb(118, 136, 143);
+}
+
+.login{
+	height: 160px; 
+	/*background-color: lightblue;*/
+}
+img{
+	position: relative;
+    width: 30%
+
 }

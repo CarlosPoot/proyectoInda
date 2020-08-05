@@ -69,8 +69,8 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
         }else if( !$scope.cliente.sc ){
             mostrarMensajeModal("Datos incompletos", "Ingrese el SC de cliente por favor");
             return false;
-        }else if( !$scope.cliente.sd ){
-            mostrarMensajeModal("Datos incompletos", "Ingrese las semnas descontadas de cliente por favor");
+        }else if( Number($scope.cliente.sd) == NaN || Number( $scope.cliente.sd) <0 ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese las semanas descontadas de cliente por favor");
             return false;
         }else if( !$scope.cliente.fb ){
             mostrarMensajeModal("Datos incompletos", "Ingrese la fecha de baja de cliente por favor");

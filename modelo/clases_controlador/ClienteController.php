@@ -23,6 +23,37 @@ class ClienteController {
 			$respuesta->mensaje = $clienteDao->getError();
 		}
 		return $respuesta;
-	}    
+    }
+    
+    public function getClientes(){
+        $respuesta  = new stdClass();
+        $input      = new HttpInput();
+        $conexion   = new Conexion();
+        $clienteDao = new ClienteDao($conexion);
+        $registros  = $clienteDao->getClientes( $input );
+
+        if( $registros !== false  ){
+            $totalRegistros = true;
+            // $totalRegistros = $monitorDao->getTotalRegistros( $input );
+            if( $totalRegistros !== false ){
+                $tem = array();
+                foreach(  $registros as $r ){
+                    $tem[] = $r->jsonSerialize();
+                }
+
+                $respuesta->success = true;
+                $respuesta->registros = $tem;
+                $respuesta->totalRegistros = 1000;
+            }else{
+                $respuesta->success = false;
+                $respuesta->mensaje = $monitorDao->getError();
+            }
+        }else{
+            $respuesta->success = false;
+            $respuesta->mensaje = $monitorDao->getError();
+        }
+
+        return $respuesta;
+    }
     
 }

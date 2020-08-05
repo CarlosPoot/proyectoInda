@@ -125,7 +125,9 @@ class Menu {
 		return '<script src="libs/angular-1.4.8/angular.min.js?' . $this->token . '"></script>
 			  	<script src="libs/angular-1.4.8/angular-route.js?' . $this->token . '"></script>
 			  	<script src="libs/angular-1.4.8/angular-animate.min.js?' . $this->token . '"></script>
-			  	<script src="libs/ng-table/dist/ng-table.min.js?' . $this->token . '"></script>
+                <script src="libs/ui-grid-4.8.1/ui-grid.core.min.js?' . $this->token . '"></script>
+                <script src="libs/ui-grid-4.8.1/ui-grid.min.js?' . $this->token . '"></script>
+                <script src="libs/ui-grid-4.8.1/i18n/ui-grid.language.es.js?' . $this->token . '"></script>
 			  	<script src="libs/popper/popper.min.js?' . $this->token . '"></script>
 			  	<script src="libs/tether/tether.min.js?' . $this->token . '"></script>
                 <script src="libs/jquery/jquery-2.1.4.min.js?' . $this->token . '"></script>
@@ -149,9 +151,9 @@ class Menu {
 				<link rel="stylesheet" href="libs/ng-table/dist/ng-table.min.css?' . $this->token . '" />
                 <link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
                 <link rel="stylesheet" href="libs/font-awesome/css/all.min.css?' . $this->token . '"/>
-				<link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />
-				<link rel="stylesheet" href="libs/jquery-ui/jquery-ui.min.css?' . $this->token . '" />';
-				
+                <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />
+				<link rel="stylesheet" href="libs/jquery-ui/jquery-ui.min.css?' . $this->token . '" />
+                <link rel="stylesheet" href="libs/ui-grid-4.8.1/ui-grid.min.css?' . $this->token . '" >';
 		
 	}
 	
@@ -162,10 +164,9 @@ class Menu {
 			            <script src="controlador/ServicioAjax.js?' . $this->token . '"></script>
 			            <script src="controlador/LoginController.js?' . $this->token . '"></script>
 			            <link rel="stylesheet"  href="libs/b4/css/bootstrap.min.css?' . $this->token . '"/>
-			            <link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
-						<link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />';
-						
-						
+						<link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
+						<link rel="stylesheet" href="libs/local/css/index.css?' . $this->token . '" />
+			            <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />';
 	
 		return $dependencias;
     }
