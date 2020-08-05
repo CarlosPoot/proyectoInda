@@ -165,7 +165,7 @@ class Menu {
 			            <script src="controlador/LoginController.js?' . $this->token . '"></script>
 			            <link rel="stylesheet"  href="libs/b4/css/bootstrap.min.css?' . $this->token . '"/>
 						<link rel="stylesheet" href="libs/local/css/animaciones.css?' . $this->token . '" />
-						<link rel="stylesheet" href="libs/local/css/index.css?' . $this->token . '" />
+						<link rel="stylesheet" href="libs/local/css/login.css?' . $this->token . '" />
 			            <link rel="stylesheet" href="libs/local/css/componentes.css?' . $this->token . '" />';
 	
 		return $dependencias;
