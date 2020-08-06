@@ -1,13 +1,13 @@
 body{
 	background-color: rgb(118, 136, 143);
 }
-
-.login{
-	height: 160px; 
-	/*background-color: lightblue;*/
+img{
+	position: absolute;
+	left: 50%;
+	bottom: 100%;
+	transform:translate(-50%,50%);
 }
-
-.img{
-	
-
+form{
+	border-radius: 15px;
+	position: relative;
 }
