@@ -1,11 +1,13 @@
-
+    
 app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, servicioUsuario, i18nService, uiGridConstants){
     
+    $('[data-toggle="tooltip"]').tooltip();
     loading(false);
     $scope.clientes = [];
     $scope.inicial = true;
     $scope.bloquearBusqueda = false;
     i18nService.setCurrentLang('es');
+        
     $scope.paginationOptions = {
         estadoCliente:"1",
         pageNumber: 1,
@@ -17,6 +19,16 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
         filtros: []
     };
 
+    inicializarConfigOpcion = function(){
+        $scope.opcion = {
+            idOpcion:0,
+            titulo:"",
+            textoBoton:"",
+            textoCerrar:"",
+            mostrarBotonAceptar:false,
+            funcion:function(){},
+        }
+    }
 
     $scope.$watch('paginationOptions.estadoCliente', function(newVal, oldVal){
         if( newVal && !$scope.inicial ){
@@ -25,7 +37,8 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
         }
     }, true);
 
-    var statusTemplate = `<button type="button" class="btn btn-secondary dropdown-toggle py-0  px-2 text-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    var statusTemplate = `
+    <button type="button" class="btn btn-secondary dropdown-toggle py-0  px-2 text-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-cog"></i>
     </button>
     <div class="dropdown-menu px-2 mx-2" style="min-width:8rem" >
@@ -149,7 +162,6 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
     };
 
     $scope.getDatos = function( numRegistros, pagina, orden , filtros ){
-
         if( !$scope.paginationOptions.estadoCliente ){
             mostrarMensajeModal("Datos incompletos", "Por favor selecciona el estado de cliente a filtrar");
             return;
@@ -180,8 +192,30 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
     $scope.getDatos( $scope.paginationOptions.pageSize , $scope.paginationOptions.pageNumber, $scope.paginationOptions.sort );
 
     $scope.verDetalles = function( cliente ){
-        console.log("entro aqui")
-        console.log( cliente )
+        $scope.cliente = angular.copy(cliente);
+        inicializarConfigOpcion()
+        $scope.opcion.idOpcion = 1;
+        $scope.opcion.titulo = "Detalles del cliente";
+        $scope.opcion.textoCerrar  = "Aceptar";
+        setTimeout(()=>{
+            $("#modalAccion").modal("show");
+        });
     }
 
+    $scope.copiarInfo = function(){
+
+        var texto = $scope.cliente.afore + " - " + $scope.cliente.asesor + "\r\n";
+        texto += $scope.cliente.numeroCliente + " - " + $scope.cliente.nombre + ", " + $scope.cliente.nss + ", ";
+        texto += $scope.cliente.curp + ", SC:" + $scope.cliente.sc + ", SD:" + $scope.cliente.sd + ", FB:" + $scope.cliente.fb + ", ";
+        texto += "ALTA DE UN DIA CON SBC:" + $scope.cliente.sbc;
+
+        var miModal = document.getElementById("modalAccion");
+        var miInput = document.createElement('textarea');
+        miInput.innerHTML = texto;
+        miModal.appendChild(miInput);
+        miInput.select();
+        document.execCommand('copy');
+        miModal.removeChild(miInput);
+    }
+   
 });

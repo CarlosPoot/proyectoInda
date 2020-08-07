@@ -125,11 +125,13 @@ class ClienteDao extends Dao {
                         c.curp AS '$cl.curp',
                         c.afore AS '$cl.afore',
                         c.asesor AS '$cl.asesor',
-                        c.sc AS '$cl.sd',
-                        c.sd AS '$cl.fb',
-                        c.fb AS '$cl.sbc',
+                        c.sc AS '$cl.sc',
+                        c.sd AS '$cl.sd',
+                        c.fb AS '$cl.fb',
+                        c.sbc AS '$cl.sbc',
                         c.alta AS '$cl.alta',
-                        c.dias_transcurridos AS '$cl.diasTranscurridos'
+                        c.dias_transcurridos AS '$cl.diasTranscurridos',
+                        c.comentarios AS '$cl.comentarios'
                 FROM cliente c
                 WHERE  c.status = :estadoCliente";
 

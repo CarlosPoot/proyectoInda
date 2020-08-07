@@ -7,7 +7,6 @@
         </div>
         <div class="col-4">
             <select class="custom-select" ng-model="paginationOptions.estadoCliente" >
-                <option selected>Selecciona estado</option>
                 <option value="1">Inicial</option>
                 <option value="2">En Proceso</option>
                 <option value="3">Pendiente</option>
@@ -23,8 +22,6 @@
             <hr class="my-2">
         </div>
     </div>
-
-    
     <div class="row mt-2">
         <div class="col-md-12">
             <div class="ui-grid-selectable" style="height: 450px;font-size: 12px;"  ui-grid="gridOptions" ui-grid-pagination ui-grid-move-columns ui-grid-selection>
@@ -33,6 +30,86 @@
         <div class="col-12">
             <div class="alert alert-primary text-center" role="alert" ng-show="tablaClientes.settings().dataset.length <= 0" >
                 <strong>No hay registro para mostrar</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para opciones en botones -->
+<div class="modal" id="modalAccion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ opcion.titulo }}</h5>
+                <button type="button" class="btn btn-info ml-2" ng-click="copiarInfo()" data-toggle="tooltip" data-placement="bottom" title="Copiar" style="border-radius: 50%;" >
+                    <i class="far fa-copy"></i>
+                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" ng-if="opcion.idOpcion == 1">
+                    <div class="col-12 col-md-6">
+                        <strong>Número cliente: </strong> <span>{{ cliente.numeroCliente }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>Nombre: </strong> <span>{{ cliente.nombre }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>Apellido: </strong> <span>{{ cliente.apellido }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>NSS: </strong> <span>{{ cliente.nss }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>CURP: </strong> <span>{{ cliente.curp }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>Afore: </strong> <span>{{ cliente.afore }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>Asesor: </strong> <span>{{ cliente.asesor }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>SC: </strong> <span>{{ cliente.sc }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>SD: </strong> <span>{{ cliente.sd }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>FB: </strong> <span>{{ cliente.fb }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>SBC: </strong> <span>{{ cliente.sbc }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>Alta: </strong> <span>{{ cliente.alta }}</span>
+                        <hr class="my-1">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>47 Días: </strong> <span>{{ cliente.diasTranscurridos }}</span>
+                        <hr class="my-1 d-block d-sm-none">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <strong>comentarios: </strong> <span>{{ cliente.comentarios }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-info" ng-show="opcion.mostrarBotonAceptar" ng-click="opcion.funcion()" ng-bind="opcion.textoBoton"></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ opcion.textoCerrar}}</button>
             </div>
         </div>
     </div>
