@@ -1,21 +1,8 @@
 
 app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioAjax, fecha , servicioUsuario){
     
-
     $scope.cliente = {};
     $('[data-toggle="tooltip"]').tooltip();
-
-    $scope.$watch('cliente.alta', function(newVal, oldVal){
-        if( newVal ){
-
-            fechaArray = newVal.split("-");
-            nuevaFecha = new Date(Date.UTC( fechaArray[2] , Number(fechaArray[1]-1), fechaArray[0] , 0, 0, 0));
-            nuevaFecha.setDate(  nuevaFecha.getDate() + 48 );
-            $scope.cliente.diasTranscurridos =  fecha.fechaconformato(nuevaFecha, 2);
-            
-        }
-
-    }, true);
 
     $scope.guardarCliente = function(){
         if( !validarCliente() ){
@@ -24,8 +11,8 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
 
         var clienteSend   = angular.copy( $scope.cliente );
         clienteSend.fb    = fecha.formatoSQL(clienteSend.fb);
-        clienteSend.alta  = fecha.formatoSQL(clienteSend.alta);
-        clienteSend.diasTranscurridos  = fecha.formatoSQL(clienteSend.diasTranscurridos);
+        // clienteSend.alta  = fecha.formatoSQL(clienteSend.alta);
+        // clienteSend.diasTranscurridos  = fecha.formatoSQL(clienteSend.diasTranscurridos);
         
         loading(true,"Creando cliente...");
 		var params = {
@@ -38,6 +25,7 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
             loading(false);
             mostrarMensajeModal("Operación exitosa", respuesta.mensaje );
             $scope.cliente = {};
+            $scope.cliente.oficina = $scope.usuario.oficina.descripcion;
 		}, function(){})]).then(function(respuestas){
 			loading(false, "");
 		});
@@ -45,7 +33,6 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
 
 
     var validarCliente = function(){
-        console.log( $scope.cliente.numeroCliente )
         if( !$scope.cliente.numeroCliente ){
             mostrarMensajeModal("Datos incompletos", "Ingrese el número de cliente por favor");
             return false;
@@ -76,9 +63,6 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
         }else if( !$scope.cliente.sbc ){
             mostrarMensajeModal("Datos incompletos", "Ingrese el salario base cotizado por favor");
             return false;
-        }else if( !$scope.cliente.alta ){
-            mostrarMensajeModal("Datos incompletos", "Ingrese la fecha del alta por favor");
-            return false;
         }else if( !$scope.cliente.comentarios ){
             mostrarMensajeModal("Datos incompletos", "Ingrese comentario por favor");
             return false;
@@ -87,8 +71,12 @@ app.controller('altaUsuarioController', function($scope, $q, $timeout, servicioA
         return true;
     }
    
-      
 
-
+    $q.all([servicioUsuario.validarSesion()]).then(function(respuesta){
+        $scope.usuario = respuesta[0].usuario;
+        $scope.cliente.oficina = $scope.usuario.oficina.descripcion;
+        timeout = respuesta[0].timeout * 1000 + 20000;
+        loading(false);
+	});
 
 });

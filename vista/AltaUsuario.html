@@ -13,6 +13,12 @@
     <div class="row mt-2">
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
+              <label for="oficina">Oficina</label>
+              <input type="text" class="form-control" name="oficina" ng-model="cliente.oficina" oninput="this.value = this.value.toUpperCase()" placeholder="Oficina del cliente" disabled >
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="form-group">
               <label for="numeroCliente">Número de cliente</label>
               <input type="text" class="form-control" name="numeroCliente" ng-model="cliente.numeroCliente" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa número de cliente">
             </div>
@@ -76,26 +82,10 @@
         <div class="col-sm-6 col-md-4">
             <div class="form-group">
                 <label for="sbc">SBC</label>
-                <input type="text" class="form-control" name="sbc" ng-model="cliente.sbc" placeholder="Ingresa SBC del cliente">
+                <input type="text" class="form-control" name="sbc" ng-model="cliente.sbc" oninput="this.value = this.value.toUpperCase()" placeholder="Ingresa SBC del cliente">
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="form-group">
-                <label for="alta">Alta</label>
-                <div class="d-flex">
-                    <input type="text" class="form-control" ng-model="cliente.alta" name="alta" placeholder="Ingresa el alta del cliente" change-month="true" change-year="true" datepicker readonly >
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="form-group">
-                <label for="diasTranscurridos">47 días</label>
-                <div class="d-flex">
-                    <input type="text" class="form-control" ng-model="cliente.diasTranscurridos" name="diasTranscurridos" placeholder="Ingresa fecha de 47 días" change-month="false" change-year="false" readonly>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-8">
+        <div class="col-12">
             <div class="form-group">
                 <label for="comentarios">Comentarios</label>
                 <textarea name="comentarios" class="form-control" ng-model="cliente.comentarios" oninput="this.value = this.value.toUpperCase()" placeholder="Comentarios del alta"  rows="1"></textarea>

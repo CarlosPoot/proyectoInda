@@ -67,6 +67,14 @@ app.factory('fecha', function() { //servicio para parsear fechas
             year = fechaArray[2];
             fechaString = year + "-" + mes + "-" + dia;
             return fechaString;
+        },
+        formatoPicker: function(fecha) {
+            fechaArray = fecha.split("-");
+            mes  = fechaArray[1];
+            year  = fechaArray[0];
+            dia = fechaArray[2];
+            fechaString = dia + "-" + mes + "-" + year;
+            return fechaString;
         }
     }
 })

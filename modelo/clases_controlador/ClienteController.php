@@ -25,6 +25,30 @@ class ClienteController {
 		return $respuesta;
     }
     
+    public function actualizarCliente(){
+		$respuesta = new stdClass();
+		$input     = new HttpInput();
+		$conexion  = new Conexion();
+		$clienteDao = new ClienteDao($conexion);
+		
+        if( !$input->defined('cliente') ){
+            $respuesta->success = false;
+            $respuesta->mensaje = "Parametros Invalidos";
+            return $respuesta;
+        }
+
+        $cliente = new ClienteBean($input->raw('cliente'), true);
+		$actualizarCliente = $clienteDao->actualizarCliente($cliente);
+		if($actualizarCliente !== false){
+            $respuesta->success = true;
+            $respuesta->mensaje = "Cliente actualizado exitosamente";
+		}else{
+			$respuesta->success = false;
+			$respuesta->mensaje = $clienteDao->getError();
+		}
+		return $respuesta;
+    }
+    
     public function getClientes(){
         $respuesta  = new stdClass();
         $input      = new HttpInput();

@@ -1,5 +1,5 @@
     
-app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, servicioUsuario, i18nService, uiGridConstants){
+app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, servicioUsuario, i18nService, uiGridConstants, fecha){
     
     $('[data-toggle="tooltip"]').tooltip();
     loading(false);
@@ -18,6 +18,20 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
         },
         filtros: []
     };
+
+    $scope.$watch('cliente.alta', function(newVal, oldVal){
+        if( newVal && $scope.opcion.idOpcion == 2 ){
+            fechaArray = newVal.split("-");
+            if( fechaArray.length == 3  ){
+                nuevaFecha = new Date(Date.UTC( fechaArray[2] , Number(fechaArray[1]-1), fechaArray[0] , 0, 0, 0));
+                nuevaFecha.setDate(  nuevaFecha.getDate() + 48 );
+                $scope.cliente.diasTranscurridos =  fecha.fechaconformato(nuevaFecha, 2);
+            }else{
+                $scope.cliente.diasTranscurridos = "";
+            }
+        }
+    }, true);
+
 
     inicializarConfigOpcion = function(){
         $scope.opcion = {
@@ -42,8 +56,8 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
         <i class="fas fa-cog"></i>
     </button>
     <div class="dropdown-menu px-2 mx-2" style="min-width:8rem" >
-        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.verDetalles(row.entity)"  href="">Ver detalles</a>
-        <a class="dropdown-item px-0 mx-0" href="">Editar</a>
+        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.verDetalles(row.entity)">Ver detalles</a>
+        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.editarCliente(row.entity)">Editar</a>
     </div>`;
 
     $scope.gridOptions = {
@@ -203,7 +217,6 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
     }
 
     $scope.copiarInfo = function(){
-
         var texto = $scope.cliente.afore + " - " + $scope.cliente.asesor + "\r\n";
         texto += $scope.cliente.numeroCliente + " - " + $scope.cliente.nombre + ", " + $scope.cliente.nss + ", ";
         texto += $scope.cliente.curp + ", SC:" + $scope.cliente.sc + ", SD:" + $scope.cliente.sd + ", FB:" + $scope.cliente.fb + ", ";
@@ -218,4 +231,102 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
         miModal.removeChild(miInput);
     }
    
+    $scope.editarCliente = function( cliente ){
+        $scope.cliente = angular.copy(cliente);
+        $scope.cliente.oficina = $scope.cliente.oficina.descripcion;
+        $scope.cliente.nss = Number($scope.cliente.nss);
+        $scope.cliente.sc = Number($scope.cliente.sc);
+        $scope.cliente.sd = Number($scope.cliente.sd);
+        $scope.cliente.fb = fecha.formatoPicker($scope.cliente.fb);
+        $scope.cliente.alta = $scope.cliente.alta == "0000-00-00" ? "":fecha.formatoPicker($scope.cliente.alta);
+        $scope.cliente.diasTranscurridos = $scope.cliente.diasTranscurridos == "0000-00-00" ? "":fecha.formatoPicker($scope.cliente.diasTranscurridos);
+        
+        inicializarConfigOpcion();
+        $scope.opcion.idOpcion = 2;
+        $scope.opcion.titulo = "Editar cliente";
+        $scope.opcion.textoCerrar = "Cancelar";
+        $scope.opcion.textoBoton  = "Guardar";
+        $scope.opcion.mostrarBotonAceptar = true;
+        $scope.opcion.funcion = actualizarCliente;
+        setTimeout(()=>{
+            $("#modalAccion").modal("show");
+        });
+    }
+
+    var validarCliente = function(){
+        if( !$scope.cliente.numeroCliente ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el número de cliente por favor");
+            return false;
+        }else if( !$scope.cliente.nombre ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el nombre del cliente por favor");
+            return false;
+        }else if( !$scope.cliente.apellido ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el apellido del cliente por favor");
+            return false;
+        }else if( !$scope.cliente.nss ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el NSS del cliente por favor");
+            return false;
+        }else if( !$scope.cliente.curp ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el curp del cliente por favor");
+            return false;
+        }else if( !$scope.cliente.afore ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el afore del cliente por favor");
+            return false;
+        }else if( !$scope.cliente.sc ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el SC de cliente por favor");
+            return false;
+        }else if( Number($scope.cliente.sd) == NaN || Number( $scope.cliente.sd) <0 ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese las semanas descontadas de cliente por favor");
+            return false;
+        }else if( !$scope.cliente.fb ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese la fecha de baja de cliente por favor");
+            return false;
+        }else if( !$scope.cliente.sbc ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese el salario base cotizado por favor");
+            return false;
+        }else if( !$scope.cliente.comentarios ){
+            mostrarMensajeModal("Datos incompletos", "Ingrese comentario por favor");
+            return false;
+        }
+
+        if(  $scope.cliente.alta ){
+            fechaArray = $scope.cliente.alta.split("-");
+            if( fechaArray.length != 3 ){
+                $scope.cliente.alta = "";
+            }
+        }
+
+        return true;
+    }
+
+    var actualizarCliente = function(){
+        if( !validarCliente() ){
+            return false;
+        }
+
+        var clienteSend   = angular.copy( $scope.cliente );
+        console.log( clienteSend  )
+        clienteSend.fb    = fecha.formatoSQL(clienteSend.fb);
+        clienteSend.alta  = clienteSend.alta ? fecha.formatoSQL(clienteSend.alta):"";
+        clienteSend.diasTranscurridos  = clienteSend.diasTranscurridos ? fecha.formatoSQL(clienteSend.diasTranscurridos):"";
+        
+        loading(true,"Creando cliente...");
+		var params = {
+			controlador : "Cliente",
+			metodo : "actualizarCliente",
+			cliente : clienteSend
+        };
+
+        $("#modalAccion").modal("hide");
+        $q.all([servicioAjax.llamadaAjax(params, function( respuesta ){
+            loading(false);
+            mostrarMensajeModal("Operación exitosa", respuesta.mensaje );
+            $scope.cliente = {};
+            $scope.cliente.oficina = $scope.usuario.oficina.descripcion;
+            $scope.getDatos( $scope.paginationOptions.pageSize , $scope.paginationOptions.pageNumber, $scope.paginationOptions.sort );
+		}, function(){})]).then(function(respuestas){
+			loading(false, "");
+		});
+    }
+
 });

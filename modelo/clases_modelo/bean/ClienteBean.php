@@ -216,7 +216,7 @@ class ClienteBean{
 		$j->id = intval($this->getId());
         $j->numeroCliente = $this->getNumeroCliente();
         $j->asesor = $this->getAsesor();
-        $j->oficina = $this->getOficina();
+        $j->oficina = $this->getOficina()->jsonSerialize();
         $j->nombre = $this->getNombre();
         $j->apellido = $this->getApellido();
         $j->nss = $this->getNss();
@@ -229,6 +229,7 @@ class ClienteBean{
         $j->alta = $this->getAlta();
         $j->diasTranscurridos = $this->getDiasTranscurridos();
         $j->comentarios = $this->getComentarios();
+        $j->status = $this->getStatus();
         return $j;
         
 	}

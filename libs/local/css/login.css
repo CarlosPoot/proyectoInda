@@ -5,7 +5,9 @@ img{
 	position: absolute;
 	left: 50%;
 	bottom: 100%;
-	transform:translate(-50%,50%);
+    transform:translate(-50%,50%);
+    height: 200px;
+    width: 200px;
 }
 form{
 	border-radius: 15px;
