@@ -1,5 +1,5 @@
     
-app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, servicioUsuario, i18nService, uiGridConstants, fecha){
+app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $timeout  ,servicioUsuario, i18nService, uiGridConstants, fecha){
     
     $('[data-toggle="tooltip"]').tooltip();
     loading(false);
@@ -84,7 +84,7 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, s
             { field: 'asesor', name: 'Asesor'},
             { field: 'alta', name: "Alta" , maxWidth: 80 },
             { field: 'diasTranscurridos', name: "47 días", maxWidth: 80  },
-            { field: "opciones", name:"", maxWidth: 60, cellClass: 'text-center', enableFiltering: false, enableSorting:false,cellTemplate: statusTemplate  }
+            { field: "opciones", name:"Acciones", maxWidth: 60, enableRowHeaderSelection: false, cellClass: 'text-center', enableFiltering: false, enableSorting:false,cellTemplate: statusTemplate  }
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
