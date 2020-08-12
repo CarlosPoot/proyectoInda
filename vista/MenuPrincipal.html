@@ -38,7 +38,7 @@
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#"><img src="resources/imagen sistema.png" alt="Trulli" width="50" height="50">
+        <a class="navbar-brand" href=""><img src="resources/imagen sistema.png" alt="Trulli" width="50" height="50">
             <strong>BUFETE JURIDICO KANCHE</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -57,7 +57,7 @@
             <div class="btn-group ml-2 text-white" id="opcionesUsuario">
                 <!-- con nombre de usuario -->
                 <div id="btnGroupDrop1" data-toggle="dropdown" aria-expanded="true" class="dropdown-toggle d-none d-md-block text-capitalize">
-                    <i class="fas fa-user pr-2 "></i>Usuario
+                    <i class="fas fa-user pr-2 text-uppercase "></i>{{ usuario.usuario | uppercase }} 
                 </div>
                 <!-- solo icono usuario -->
                 <div id="btnGroupDrop1" data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle d-flex align-items-center d-md-none ml-2">

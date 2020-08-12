@@ -6,12 +6,14 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
     $scope.clientes = [];
     $scope.inicial = true;
     $scope.bloquearBusqueda = false;
+    $scope.busquedaInfo;
     i18nService.setCurrentLang('es');
-        
+    $scope.rolesEliminacion = [2,3];    
+
     $scope.paginationOptions = {
         estadoCliente:"1",
         pageNumber: 1,
-        pageSize: 20,
+        pageSize: 2,
         sort: {
             columna: "",
             orden: ""
@@ -40,12 +42,14 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
             textoBoton:"",
             textoCerrar:"",
             mostrarBotonAceptar:false,
+            longitudModal:"modal-lg",
             funcion:function(){},
         }
     }
 
     $scope.$watch('paginationOptions.estadoCliente', function(newVal, oldVal){
         if( newVal && !$scope.inicial ){
+            console.log("escucha")
             $scope.bloquearBusqueda = true;
             $scope.getDatos( $scope.paginationOptions.pageSize , $scope.paginationOptions.pageNumber, $scope.paginationOptions.sort );
         }
@@ -56,16 +60,18 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
         <i class="fas fa-cog"></i>
     </button>
     <div class="dropdown-menu px-2 mx-2" style="min-width:8rem" >
-        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.verDetalles(row.entity)">Ver detalles</a>
-        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.editarCliente(row.entity)">Editar</a>
+        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.verDetalles(row.entity)">  Ver detalles</a>
+        <a class="dropdown-item px-0 mx-0" ng-click="grid.appScope.editarCliente(row.entity)"> Editar</a>
+        <a class="dropdown-item px-0 mx-0" ng-if="grid.appScope.validarEliminacion(row.entity)" ng-click="grid.appScope.eliminarCliente(row.entity)">Eliminar</a>
     </div>`;
 
     $scope.gridOptions = {
-        paginationPageSizes: [10,15, 20, 30, 50],
+        paginationPageSizes: [2,10,15, 20, 30, 50],
         paginationPageSize: $scope.paginationOptions.pageSize ,
         useExternalPagination: true,
         enableSorting: true,
         enableFiltering: false,
+        useExternalFiltering: true,
         filterOptions: $scope.filterOptions,
         multiSelect: false,
         expandableRowHeight: 150,
@@ -75,19 +81,20 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
         enableRowHeaderSelection: false,
         enableColumnMenus: false,
         columnDefs: [
-            { field: 'numeroCliente', name: 'Número cliente'  },
+            { field: 'numeroCliente', name: 'Num. cliente' , maxWidth: 110 ,sort: { direction: uiGridConstants.ASC, priority: 1 }  },
             { field: 'nombre', name:'Nombre' },
             { field: 'apellido', name:'Apellido'},
-            { field: 'nss', name :'NSS' },
+            { field: 'nss', name :'NSS',maxWidth: 100 },
             { field: 'curp', name: 'Curp' },
-            { field: 'afore', name :'Afore'},
+            { field: 'afore', name :'Afore',maxWidth: 100},
             { field: 'asesor', name: 'Asesor'},
             { field: 'alta', name: "Alta" , maxWidth: 80 },
             { field: 'diasTranscurridos', name: "47 días", maxWidth: 80  },
-            { field: "opciones", name:"Acciones", maxWidth: 60, enableRowHeaderSelection: false, cellClass: 'text-center', enableFiltering: false, enableSorting:false,cellTemplate: statusTemplate  }
+            { field: "opciones", name:"Acciones", maxWidth: 60, cellClass: 'text-center', enableFiltering: false, enableSorting:false,cellTemplate: statusTemplate  }
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
+            console.log("ordenamiento")
             // ordenamiento
             $scope.gridApi.core.on.sortChanged($scope, function(grid, sortColumns) {
                 console.log("ordenamiento")
@@ -112,19 +119,16 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
                             campo:  grid.columns[x].field,
                             termino: grid.columns[x].filters[0].term
                         }
-
                         $scope.paginationOptions.filtros.push( filtro );
                     }
                 }
-                
                 // se retrasa la busqueda medio segundo
                 $timeout.cancel( $scope.busquedaInfo );
                 $scope.busquedaInfo = $timeout( function(){
                     $scope.paginationOptions.pageNumber = 1;
                     $scope.gridApi.pagination.seek( $scope.paginationOptions.pageNumber );
                     $scope.getDatos( $scope.paginationOptions.pageSize, $scope.paginationOptions.pageNumber, $scope.paginationOptions.sort, $scope.paginationOptions.filtros );
-                },700);
-                
+                },500);
             });
 
             // Paginación
@@ -132,11 +136,11 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
                 console.log("paginacion")
                 $scope.paginationOptions.pageNumber = newPage;
                 $scope.paginationOptions.pageSize = pageSize;
-                
                 if( $scope.bloquearBusqueda ){
                     return;
                 }
-                $scope.getDatos( pageSize, newPage, $scope.paginationOptions.sort, $scope.paginationOptions.filtros );
+                $scope.getDatos( $scope.paginationOptions.pageSize , $scope.paginationOptions.pageNumber, $scope.paginationOptions.sort );
+                // $scope.getDatos( pageSize, newPage, $scope.paginationOptions.sort, $scope.paginationOptions.filtros );
                 $scope.gridApi.core.scrollTo( 
                     $scope.gridOptions.data[0],
                     $scope.gridOptions.columnDefs[0]
@@ -193,13 +197,14 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
         }
 
         loading(true, "Cargando información...");
+        $scope.bloquearBusqueda = true;
         $q.all([servicioAjax.llamadaAjax(params,function( respuesta ){
             $scope.gridOptions.data = respuesta.registros;
             $scope.gridOptions.totalItems = respuesta.totalRegistros;
         }, function(){})]).then(function(respuesta){
             loading(false,"");
             $scope.inicial = false;
-            $scope.bloquearBusqueda = true;
+            $scope.bloquearBusqueda = false;
         });
     }
 
@@ -247,6 +252,7 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
         $scope.opcion.textoCerrar = "Cancelar";
         $scope.opcion.textoBoton  = "Guardar";
         $scope.opcion.mostrarBotonAceptar = true;
+        $scope.opcion.longitudModal = "modal-xl";
         $scope.opcion.funcion = actualizarCliente;
         setTimeout(()=>{
             $("#modalAccion").modal("show");
@@ -305,7 +311,6 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
         }
 
         var clienteSend   = angular.copy( $scope.cliente );
-        console.log( clienteSend  )
         clienteSend.fb    = fecha.formatoSQL(clienteSend.fb);
         clienteSend.alta  = clienteSend.alta ? fecha.formatoSQL(clienteSend.alta):"";
         clienteSend.diasTranscurridos  = clienteSend.diasTranscurridos ? fecha.formatoSQL(clienteSend.diasTranscurridos):"";
@@ -328,5 +333,57 @@ app.controller('consultaUsuarioController', function($scope, $q, servicioAjax, $
 			loading(false, "");
 		});
     }
+
+    $q.all([servicioUsuario.validarSesion()]).then(function(respuesta){
+        $scope.usuario = respuesta[0].usuario;
+        loading(false);
+	});
+
+    $scope.validarEliminacion = function(){
+        var rolesUsuario = $scope.usuario.roles;
+        return rolesUsuario.some( function(item){
+            if(  $scope.rolesEliminacion.indexOf(  item.id ) < 0 ){
+                return false;
+            }
+            return true;
+        });
+    }
+
+    $scope.eliminarCliente = function( cliente ){    
+        inicializarConfigOpcion();
+        $scope.opcion.idOpcion = 3;
+        $scope.opcion.titulo = "Eliminar cliente";
+        $scope.opcion.textoCerrar = "Cancelar";
+        $scope.opcion.textoBoton  = "Confirmar";
+        $scope.opcion.mostrarBotonAceptar = true;
+        $scope.opcion.funcion = borrarCliente;
+        $scope.opcion.longitudModal = "";
+        $scope.cliente = angular.copy( cliente );
+        setTimeout(()=>{
+            $("#modalAccion").modal("show");
+        });
+    }
+
+    var borrarCliente = function(){
+        loading(true,"Eliminando cliente...");
+		var params = {
+			controlador : "Cliente",
+			metodo : "eliminarCliente",
+			idCliente : $scope.cliente.id
+        };
+
+        $("#modalAccion").modal("hide");
+        $q.all([servicioAjax.llamadaAjax(params, function( respuesta ){
+            loading(false);
+            mostrarMensajeModal("Operación exitosa", respuesta.mensaje );
+            $scope.cliente.oficina = $scope.usuario.oficina.descripcion;
+            $scope.paginationOptions.pageNumber =  1;
+            $scope.getDatos( $scope.paginationOptions.pageSize , $scope.paginationOptions.pageNumber, $scope.paginationOptions.sort );
+		}, function(){})]).then(function(respuestas){
+            loading(false, "");
+            $scope.cliente = {};
+		});
+    }
+
 
 });

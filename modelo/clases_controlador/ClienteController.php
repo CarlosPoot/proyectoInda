@@ -97,4 +97,27 @@ class ClienteController {
         return $respuesta;
     }
 
+    public function eliminarCliente(){
+		$respuesta = new stdClass();
+		$input     = new HttpInput();
+		$conexion  = new Conexion();
+		$clienteDao = new ClienteDao($conexion);
+		
+        if( !$input->defined('idCliente') ){
+            $respuesta->success = false;
+            $respuesta->mensaje = "Parametros Invalidos";
+            return $respuesta;
+        }
+
+		$eliminarCliente = $clienteDao->eliminarCliente(  $input->int('idCliente') );
+		if($eliminarCliente !== false){
+            $respuesta->success = true;
+            $respuesta->mensaje = "Cliente eliminado exitosamente";
+		}else{
+			$respuesta->success = false;
+			$respuesta->mensaje = $clienteDao->getError();
+		}
+		return $respuesta;
+    }
+
 }

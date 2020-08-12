@@ -208,10 +208,10 @@ class ClienteDao extends Dao {
                     $sql .= " AND c.nombre LIKE :nombre";
                     break;
                 case "apellido":
-                    $sql .= " AND c.apellido = :apellido";
+                    $sql .= " AND c.apellido LIKE :apellido";
                     break;
                 case "nss":
-                    $sql .= " AND c.nss = :nss";
+                    $sql .= " AND c.nss LIKE :nss";
                     break;
                 case "curp":
                     $sql .= " AND c.curp LIKE :curp";
@@ -298,10 +298,10 @@ class ClienteDao extends Dao {
                         $st->bindValue(":nombre", "%" . $f["termino"]. "%" , PDO::PARAM_STR );
                         break;
                     case "apellido":
-                        $st->bindValue(":apellido",  $f["termino"] , PDO::PARAM_STR );
+                        $st->bindValue(":apellido", "%". $f["termino"]. "%" , PDO::PARAM_STR );
                         break;
                     case "nss":
-                        $st->bindValue(":nss", $f["termino"] , PDO::PARAM_STR );
+                        $st->bindValue(":nss", "%" . $f["termino"] . "%" , PDO::PARAM_STR );
                         break;
                     case "curp":
                         $st->bindValue(":curp", "%" . $f["termino"] . "%" , PDO::PARAM_STR );
@@ -348,7 +348,7 @@ class ClienteDao extends Dao {
     }
 
     public function getTotalRegistros( $input ){
-
+        $sesion = new Session();
         $estadoCliente = $input->int("estadoCliente");
         if( !$estadoCliente ){
             $this->setError("Parametros Invalidos, estado de cliente no recibido.");
@@ -357,7 +357,12 @@ class ClienteDao extends Dao {
 
         $sql = "SELECT COUNT(c.id_cliente) as totalRegistros 
                 FROM cliente c
-                WHERE c.status = :estadoCliente";
+                INNER JOIN oficina of ON of.id_oficina = c.id_oficina
+                WHERE c.id_oficina = :oficinaCliente";
+
+        if( $estadoCliente ){
+            $sql .= " AND c.status = :estadoCliente";
+        }
 
         $sort = $input->raw("orden");
         $filtros = $input->raw("filtros");
@@ -370,10 +375,10 @@ class ClienteDao extends Dao {
                     $sql .= " AND c.nombre LIKE :nombre";
                     break;
                 case "apellido":
-                    $sql .= " AND c.apellido = :apellido";
+                    $sql .= " AND c.apellido LIKE :apellido";
                     break;
                 case "nss":
-                    $sql .= " AND c.nss = :nss";
+                    $sql .= " AND c.nss LIKE :nss";
                     break;
                 case "curp":
                     $sql .= " AND c.curp LIKE :curp";
@@ -441,14 +446,10 @@ class ClienteDao extends Dao {
                 break;
         }
 
-        $sql .=" limit :inicio,:numRegistros";
-
         try{
         
-            $inicio = ( $input->int("pagina") -1 ) * $input->int("numRegistros");
             $st = $this->conexion->prepare( $sql );
-            $st->bindValue(":inicio", $inicio, PDO::PARAM_INT );
-            $st->bindValue(":numRegistros", $input->int("numRegistros") , PDO::PARAM_INT );
+            $st->bindValue(":oficinaCliente", $sesion->getVariableSesion(Constantes::$OFICINA_SESSION), PDO::PARAM_INT );
             $st->bindValue(":estadoCliente", $estadoCliente , PDO::PARAM_INT );
             foreach( $filtros as $f ){
                 switch( $f["campo"] ){
@@ -459,10 +460,10 @@ class ClienteDao extends Dao {
                         $st->bindValue(":nombre", "%" . $f["termino"]. "%" , PDO::PARAM_STR );
                         break;
                     case "apellido":
-                        $st->bindValue(":apellido",  $f["termino"] , PDO::PARAM_STR );
+                        $st->bindValue(":apellido", "%". $f["termino"]. "%" , PDO::PARAM_STR );
                         break;
                     case "nss":
-                        $st->bindValue(":nss", $f["termino"] , PDO::PARAM_STR );
+                        $st->bindValue(":nss", "%" . $f["termino"]. "%" , PDO::PARAM_STR );
                         break;
                     case "curp":
                         $st->bindValue(":curp", "%" . $f["termino"] . "%" , PDO::PARAM_STR );
@@ -508,5 +509,27 @@ class ClienteDao extends Dao {
         }
     }
 
+    public function eliminarCliente( $idCliente ){
+        $sql    = "UPDATE cliente SET 
+                    status = :status
+                    WHERE id_cliente = :idCliente";
+
+        try {
+
+            $st = $this->conexion->prepare($sql);
+            $st->bindValue(':idCliente', $idCliente , PDO::PARAM_INT);
+            $st->bindValue(':status', Constantes::$STATUS_ELIMINADO, PDO::PARAM_INT);
+            if ($st->execute()) {
+                return true;
+            }
+
+            $error = $st->errorInfo();
+            $this->setError($error[2]);
+            return false;
+        } catch (PDOException $e) {
+            $this->setError($e->getMessage());
+            return false;
+        }
+    }
 
 }
