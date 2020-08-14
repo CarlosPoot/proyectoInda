@@ -36,7 +36,7 @@ CREATE TABLE `cliente` (
   `fb` date NOT NULL,
   `sbc` decimal(15,2) unsigned NOT NULL,
   `alta` date NOT NULL,
-  `dias_transcurridos` int(5) NOT NULL,
+  `dias_transcurridos` date NOT NULL,
   `comentarios` varchar(250) NOT NULL,
   `id_oficina` int(11) unsigned NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
@@ -50,7 +50,7 @@ CREATE TABLE `cliente` (
   KEY `id_usuario_fkc_idx` (`id_usuario`),
   CONSTRAINT `id_oficina_fkc` FOREIGN KEY (`id_oficina`) REFERENCES `oficina` (`id_oficina`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_usuario_fkc` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (3,'11111','alsdknads','asdkjaskdj','234324324','sñdjadsl','aoñdjalñdñsjl','sdfljasdjsald',3433,234,'2020-07-17',0.00,'2020-07-20',5,'rpobando alta',1,1,1,'2020-07-31 02:05:01',NULL),(6,'111112','alsdknads','asdkjaskdj','2343243243','sñdjadsl','aoñdjalñdñsjl','sdfljasdjsald',3433,234,'2020-07-17',0.00,'2020-07-20',5,'rpobando alta',1,1,1,'2020-07-31 02:07:16',NULL);
+INSERT INTO `cliente` VALUES (3,'11111','usuariio de prueba','asdkjaskdj','234324324','sñdjadsl','aoñdjalñdñsjl','sdfljasdjsald',3433,234,'2020-07-17',55555.00,'2020-07-20','2020-09-05','rpobando alta',1,1,1,'2020-07-31 02:05:01','2020-08-12 00:00:25'),(6,'111112','alsdknads','asdkjaskdj','2343243243','sñdjadsl','aoñdjalñdñsjl','sdfljasdjsald',3433,234,'2020-07-17',0.00,'2020-07-20','0000-00-00','rpobando alta',1,1,1,'2020-07-31 02:07:16',NULL),(7,'3333','344','3434','233','234234','234234','234234',234234,0,'2020-08-03',234234.00,'2020-08-03','0000-00-00','234234',1,1,1,'2020-08-03 23:47:00',NULL),(8,'N123213','CARLOS','POOT','342342332','ASDNB234','SDLJFADJK','WDLKJNAKSN',3,3,'2020-08-05',222.00,'2020-08-04','2020-09-20','ES UNA PRUEBA',1,0,1,'2020-08-04 23:57:14','2020-08-12 00:55:01'),(9,'QWLEKJQWE','ALKDLAKD','ADLKJKD','12345678934','ASDKJNADNN','WLDKNKD','LKDNKANDSK',3,3,'2020-08-05',1.50,'2020-08-05','2020-09-21','PRUEBAA',1,0,1,'2020-08-05 00:00:42','2020-08-12 00:54:31'),(10,'52725278','EDITADO','APELLIDOO E','3812937444','SJK232KWSJ2ED','SDJ3E23EJEE','ADKASDKJ3KEJM',423215,2324235,'2020-08-12',234234.00,'0000-00-00','0000-00-00','PROABNDOOO EDITANDO',1,3,1,'2020-08-10 23:54:05','2020-08-11 01:25:10'),(11,'USUARIO MERIDA','NOMBRE','APELLIDO MERIDA','32394234293','Q39U4234LK','MERISAAA','A MESIRA',234234,23423,'2020-08-06',123123.00,'0000-00-00','0000-00-00','PRUEBA USUAERIO DE MERIDA',2,1,2,'2020-08-12 00:19:12',NULL);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +212,7 @@ CREATE TABLE `rol` (
   `descripcion` varchar(45) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +221,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` VALUES (1,'Jefe de oficina','2020-06-12 00:09:02');
+INSERT INTO `rol` VALUES (1,'Jefe de oficina','2020-06-12 00:09:02'),(2,'JEFE','2020-08-12 00:21:05'),(3,'OFICINA CENTRAL','2020-08-12 00:21:32');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +241,7 @@ CREATE TABLE `rol_usuario` (
   KEY `id_usuario_fk_ru_idx` (`id_usuario`),
   CONSTRAINT `id_rol_fkru` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_usuario_fk_ru` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +250,7 @@ CREATE TABLE `rol_usuario` (
 
 LOCK TABLES `rol_usuario` WRITE;
 /*!40000 ALTER TABLE `rol_usuario` DISABLE KEYS */;
-INSERT INTO `rol_usuario` VALUES (1,1,1);
+INSERT INTO `rol_usuario` VALUES (1,1,1),(2,1,2),(3,2,1);
 /*!40000 ALTER TABLE `rol_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,11 +268,10 @@ CREATE TABLE `usuario` (
   `password` varchar(40) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
-  `id_oficina` int(10) unsigned NOT NULL,
+  `id_oficina` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id_usuario`),
-  KEY `id_ubicacion_ufk_idx` (`id_oficina`),
-  CONSTRAINT `id_oficina_ufk` FOREIGN KEY (`id_oficina`) REFERENCES `oficina` (`id_oficina`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  KEY `id_ubicacion_ufk_idx` (`id_oficina`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,7 +280,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Carlos Poot','cpoot','bc47b81b3f1d88f66720beb8f15b02595b48557e',1,'2020-06-22 00:08:32',1);
+INSERT INTO `usuario` VALUES (1,'Carlos Poot','cpoot','bc47b81b3f1d88f66720beb8f15b02595b48557e',1,'2020-06-22 00:08:32',1),(2,'Usuario merida','merida','bc47b81b3f1d88f66720beb8f15b02595b48557e',1,'2020-08-12 00:17:38',2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,4 +297,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-31  2:09:56
+-- Dump completed on 2020-08-14 11:03:12
